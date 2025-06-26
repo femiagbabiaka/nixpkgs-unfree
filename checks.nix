@@ -7,7 +7,6 @@ let
     inherit system;
     config = {
       allowUnfree = true;
-      cudaSupport = true;
     };
   };
 
@@ -18,7 +17,7 @@ let
 
   # Tweaked version of nixpkgs/maintainers/scripts/check-hydra-by-maintainer.nix
   #
-  # It traverses nixpkgs recursively, respecting recurseForDerivations and 
+  # It traverses nixpkgs recursively, respecting recurseForDerivations and
   # returns a list of name/value pairs of all the packages matching "cond"
   packagesWith =
     prefix: cond: set:
@@ -55,12 +54,18 @@ let
 
   isNotCudaPackage = key: !(lib.hasPrefix "cuda" key);
 
-  canSubstituteSrc = pkg:
+  canSubstituteSrc =
+    pkg:
     # requireFile don't allow using substituters and are therefor skipped
     pkg.src.allowSubstitutes or true;
 
   select =
-    key: pkg: (isUnfree pkg) && (isSource key pkg) && (isNotCudaPackage key) && (isNotLinuxKernel key) && (canSubstituteSrc pkg);
+    key: pkg:
+    (isUnfree pkg)
+    && (isSource key pkg)
+    && (isNotCudaPackage key)
+    && (isNotLinuxKernel key)
+    && (canSubstituteSrc pkg);
 
   packages = packagesWith "" (key: select key) pkgs;
 in

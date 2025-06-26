@@ -30,7 +30,6 @@
           config = {
             allowUnfree = true;
             allowUnsupportedSystem = true;
-            cudaSupport = true;
           };
         }
       );
