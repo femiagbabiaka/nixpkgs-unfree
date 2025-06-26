@@ -1,6 +1,8 @@
 {
   description = "nixpkgs with the unfree bits enabled";
 
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
   outputs =
     inputs@{ self, nixpkgs }:
     let
