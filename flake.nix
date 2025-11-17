@@ -2,7 +2,7 @@
   description = "nixpkgs with the unfree bits enabled";
 
   inputs = {
-      nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+      nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
       emacs-overlay.url = "github:nix-community/emacs-overlay/master";
   };
 
