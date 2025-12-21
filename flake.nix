@@ -37,13 +37,7 @@
           overlays = [ 
             emacs-overlay.overlays.default 
             (final: prev: {
-                emacsPackages = prev.emacsPackages.overrideScope (eself: esuper: {
-                    treesit-grammars = esuper.treesit-grammars.override {
-                        grammars = builtins.attrValues (
-                            builtins.removeAttrs esuper.treesit-grammars.pkgs [ "tree-sitter-razor" ]
-                            );
-                    };
-                });
+                tree-sitter-grammars = builtins.removeAttrs prev.tree-sitter-grammars [ "tree-sitter-razor" ];
             })
           ];
         }
