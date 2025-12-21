@@ -33,13 +33,8 @@
           config = {
             allowUnfree = true;
             allowUnsupportedSystem = true;
+            allowBroken = true;
           };
-          overlays = [ 
-            emacs-overlay.overlays.default 
-            (final: prev: {
-                tree-sitter-grammars = builtins.removeAttrs prev.tree-sitter-grammars [ "tree-sitter-razor" ];
-            })
-          ];
         }
       );
 
