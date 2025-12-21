@@ -39,7 +39,7 @@
             (final: prev: {
                 emacsPackages = prev.emacsPackages.overrideScope (eself: esuper: {
                     treesit-grammars = esuper.treesit-grammars.override {
-                        grammars = builtins.removeAttrs esuper.treesit-grammars.pkgs [ "tree-sitter-razor" ];
+                        grammars = builtins.removeAttrs esuper.treesit-grammars.pkgs [ "razor" ];
                     };
                 });
             })
