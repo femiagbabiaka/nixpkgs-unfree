@@ -35,6 +35,9 @@
             allowUnsupportedSystem = true;
             allowBroken = true;
           };
+          overlays = [ 
+            emacs-overlay.overlays.default 
+          ];
         }
       );
 
