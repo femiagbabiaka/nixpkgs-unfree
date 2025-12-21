@@ -34,7 +34,16 @@
             allowUnfree = true;
             allowUnsupportedSystem = true;
           };
-          overlays = [ emacs-overlay.overlays.default ];
+          overlays = [ 
+            emacs-overlay.overlays.default 
+            (final: prev: {
+                emacsPackages = prev.emacsPackages.overrideScope (eself: esuper: {
+                    treesit-grammars = esuper.treesit-grammars.override {
+                        grammars = builtins.removeAttrs esuper.treesit-grammars.pkgs [ "tree-sitter-razor" ];
+                    };
+                });
+            })
+          ];
         }
       );
 
