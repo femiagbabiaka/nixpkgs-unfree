@@ -1,0 +1,36 @@
+name: Update flake.lock
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # weekly, Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-flake-lock
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: cachix/install-nix-action@v30
+      - name: Update flake inputs
+        run: nix flake update --accept-flake-config
+      - name: Check flake evaluates
+        run: nix eval --accept-flake-config .#legacyPackages.x86_64-linux.hello.name
+      - name: Commit and push
+        run: |
+          if git diff --quiet flake.lock; then
+            echo "flake.lock already up to date"
+            exit 0
+          fi
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "flake.lock: update $(date -u +%Y-%m-%d)"
+          git push origin HEAD:main
